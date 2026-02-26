@@ -32,31 +32,57 @@
     <div class="touch-btn" id="btn-right">R</div>
     <div class="touch-btn" id="btn-enter">ENTER</div>
 
-    <script>
-        /* This forces the phone to use a simpler renderer so it doesn't crash */
-        lime.embed ("Funkin", "openfl-content", 0, 0, { parameters: { renderer: "canvas" } });
+<script>
+    // 1. Start the game
+    lime.embed ("Funkin", "openfl-content", 0, 0, { parameters: { renderer: "canvas" } });
 
-        const keys = { 
-            'btn-left': 37, 'btn-down': 40, 'btn-up': 38, 'btn-right': 39, 'btn-enter': 13 
+    // 2. Mapping the buttons to key codes
+    const keys = { 
+        'btn-left': { key: 'ArrowLeft', code: 37 }, 
+        'btn-down': { key: 'ArrowDown', code: 40 }, 
+        'btn-up': { key: 'ArrowUp', code: 38 }, 
+        'btn-right': { key: 'ArrowRight', code: 39 }, 
+        'btn-enter': { key: 'Enter', code: 13 } 
+    };
+
+    Object.keys(keys).forEach(id => {
+        const btn = document.getElementById(id);
+        const data = keys[id];
+
+        const sendKey = (type) => {
+            const event = new KeyboardEvent(type, {
+                key: data.key,
+                keyCode: data.code,
+                which: data.code,
+                code: data.key,
+                bubbles: true,        // Forces the event to travel up the DOM
+                cancelable: true,
+                composed: true,       // Allows the event to cross Shadow DOM boundaries
+                shiftKey: false
+            });
+            // Send the event to the window AND the game container
+            window.dispatchEvent(event);
+            document.getElementById("openfl-content").dispatchEvent(event);
         };
 
-        Object.keys(keys).forEach(id => {
-            const btn = document.getElementById(id);
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: keys[id] }));
-            });
-            btn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: keys[id] }));
-            });
+        btn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            sendKey('keydown');
+            btn.style.backgroundColor = "rgba(255, 255, 255, 0.4)"; // Visual feedback
         });
 
-        // iPhone Audio Wakeup
-        window.addEventListener('touchstart', () => {
-            const ctx = window.AudioContext || window.webkitAudioContext;
-            if (ctx) { (new ctx()).resume(); }
-        }, {once: true});
-    </script>
+        btn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            sendKey('keyup');
+            btn.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+        });
+    });
+
+    // 3. Audio Wakeup (Crucial for iOS)
+    window.addEventListener('touchstart', () => {
+        const ctx = window.AudioContext || window.webkitAudioContext;
+        if (ctx) { (new ctx()).resume(); }
+    }, {once: true});
+</script>
 </body>
 </html>
