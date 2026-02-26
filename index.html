@@ -51,28 +51,20 @@
 		#btn-enter { bottom: 15px; background: rgba(0, 150, 0, 0.6); }
 	</style>
 </head>
-<body>
-	<div id="openfl-content"></div>
-
-	<div class="touch-btn" id="btn-left">L</div>
-	<div class="touch-btn" id="btn-down">D</div>
-	<div class="touch-btn" id="btn-up">U</div>
-	<div class="touch-btn" id="btn-right">R</div>
-	<div class="sys-btn" id="btn-esc">ESC</div>
-	<div class="sys-btn" id="btn-enter">ENTER</div>
-	
-	<script type="text/javascript">
-		/* 1. FORCED LOW QUALITY FOR IPHONE 15 PRO MAX */
+<body><script type="text/javascript">
+		/* 1. FORCED LOW QUALITY & CLEAN CACHE */
 		(function() {
 			try {
+				localStorage.clear(); // Clears any old "crash" data
 				const settings = { lowQual: true, antialiasing: false, shaders: false, cacheCharacters: false };
 				localStorage.setItem('PsychEngine_preferences', JSON.stringify(settings));
 				localStorage.setItem('KadeEngine_settings', JSON.stringify(settings));
 			} catch (e) { console.log("Memory fix error"); }
 		})();
 
-		/* 2. START THE GAME */
-		lime.embed ("Funkin", "openfl-content", 1280, 720, { parameters: {} });
+		/* 2. START THE GAME (Forcing DOM Renderer for stability) */
+		// Ensure this name matches YOUR file exactly (capital F)
+		lime.embed ("Funkin", "openfl-content", 0, 0, { parameters: { renderer: "dom" } });
 
 		/* 3. BUTTON CONTROLS */
 		const keys = { 
@@ -83,14 +75,16 @@
 
 		Object.keys(keys).forEach(id => {
 			const btn = document.getElementById(id);
-			const trigger = (t) => {
-				window.dispatchEvent(new KeyboardEvent(t, {
-					key: keys[id].key, keyCode: keys[id].code, which: keys[id].code,
-					bubbles: true, cancelable: true
-				}));
-			};
-			btn.addEventListener('touchstart', (e) => { e.preventDefault(); trigger('keydown'); btn.style.backgroundColor = "rgba(255, 255, 255, 0.4)"; });
-			btn.addEventListener('touchend', (e) => { e.preventDefault(); trigger('keyup'); btn.style.backgroundColor = "rgba(255, 255, 255, 0.15)"; });
+			if (btn) {
+				const trigger = (t) => {
+					window.dispatchEvent(new KeyboardEvent(t, {
+						key: keys[id].key, keyCode: keys[id].code, which: keys[id].code,
+						bubbles: true, cancelable: true
+					}));
+				};
+				btn.addEventListener('touchstart', (e) => { e.preventDefault(); trigger('keydown'); btn.style.backgroundColor = "rgba(255, 255, 255, 0.4)"; });
+				btn.addEventListener('touchend', (e) => { e.preventDefault(); trigger('keyup'); btn.style.backgroundColor = "rgba(255, 255, 255, 0.15)"; });
+			}
 		});
 
 		/* 4. AUDIO WAKEUP */
@@ -99,5 +93,3 @@
 			if (ctx) { const c = new ctx(); if (c.state === 'suspended') c.resume(); }
 		}, {once: true});
 	</script>
-</body>
-</html>
