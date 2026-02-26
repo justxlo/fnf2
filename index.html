@@ -1,276 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
 	<meta charset="utf-8">
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-	<meta name="description" content="Funkin' HTML Port" />
-	<meta name="keywords" content="fnf, friday night funkin, fnf html, html port, html" />
-	<title>Friday Night Funkin'</title>
-	<meta property="og:locale" content="en-US" />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Funkin' HTML Port" />
-	<meta property="og:description" content="Friday Night Funkin' is a rhythm game, built using HaxeFlixel for Ludum Dare 47." />
-	
-	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	
-	
-	<link rel="shortcut icon" type="image/png" href="./favicon.png">
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Friday Night Funkin' Mobile</title>
 	
 	<script type="text/javascript" src="./Funkin.js"></script>
 	
-	<script>
-		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
-		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
-			var meta = document.getElementById ("viewport");
-			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
-		}
-	</script>
-	
 	<style>
-		html,body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-		#openfl-content { background: #000000; width: 100%; height: 100%; }
-		@font-face {
-			font-family: '5by7';
-			src: url('assets/fonts/5by7.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/5by7.woff') format('woff'),
-			url('assets/fonts/5by7.ttf') format('truetype'),
-			url('assets/fonts/5by7.svg#5by7') format('svg');
-			font-weight: normal;
-			font-style: normal;
+		/* Basic Page Setup */
+		body, html { 
+			margin: 0; padding: 0; width: 100%; height: 100%; 
+			overflow: hidden; background-color: #000; 
 		}
-		@font-face {
-			font-family: '5by7 Bold';
-			src: url('assets/fonts/5by7_b.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/5by7_b.woff') format('woff'),
-			url('assets/fonts/5by7_b.ttf') format('truetype'),
-			url('assets/fonts/5by7_b.svg#5by7%20Bold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Consolas Italic';
-			src: url('assets/fonts/Consolas.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Consolas.woff') format('woff'),
-			url('assets/fonts/Consolas.ttf') format('truetype'),
-			url('assets/fonts/Consolas.svg#Consolas%20Italic') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'DS-Digital';
-			src: url('assets/fonts/DS-DIGI.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/DS-DIGI.TTF') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'DS-Digital Bold';
-			src: url('assets/fonts/DS-DIGIB.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/DS-DIGIB.TTF') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'DS-Digital Italic';
-			src: url('assets/fonts/DS-DIGII.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/DS-DIGII.TTF') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'DS-Digital Bold Italic';
-			src: url('assets/fonts/DS-DIGIT.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/DS-DIGIT.TTF') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata Black';
-			src: url('assets/fonts/Inconsolata-Black.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-Black.woff') format('woff'),
-			url('assets/fonts/Inconsolata-Black.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-Black.svg#Inconsolata%20Black') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata Bold';
-			src: url('assets/fonts/Inconsolata-Bold.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-Bold.woff') format('woff'),
-			url('assets/fonts/Inconsolata-Bold.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-Bold.svg#Inconsolata%20Bold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata ExtraBold';
-			src: url('assets/fonts/Inconsolata-ExtraBold.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-ExtraBold.woff') format('woff'),
-			url('assets/fonts/Inconsolata-ExtraBold.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-ExtraBold.svg#Inconsolata%20ExtraBold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata ExtraLight';
-			src: url('assets/fonts/Inconsolata-ExtraLight.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-ExtraLight.woff') format('woff'),
-			url('assets/fonts/Inconsolata-ExtraLight.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-ExtraLight.svg#Inconsolata%20ExtraLight') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata Medium';
-			src: url('assets/fonts/Inconsolata-Medium.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-Medium.woff') format('woff'),
-			url('assets/fonts/Inconsolata-Medium.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-Medium.svg#Inconsolata%20Medium') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata Regular';
-			src: url('assets/fonts/Inconsolata-Regular.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-Regular.woff') format('woff'),
-			url('assets/fonts/Inconsolata-Regular.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-Regular.svg#Inconsolata%20Regular') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Inconsolata SemiBold';
-			src: url('assets/fonts/Inconsolata-SemiBold.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Inconsolata-SemiBold.woff') format('woff'),
-			url('assets/fonts/Inconsolata-SemiBold.ttf') format('truetype'),
-			url('assets/fonts/Inconsolata-SemiBold.svg#Inconsolata%20SemiBold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Pixel Arial 11 Bold';
-			src: url('assets/fonts/pixel.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/pixel.woff') format('woff'),
-			url('assets/fonts/pixel.otf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Quantico-Bold';
-			src: url('assets/fonts/Quantico-Bold.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Quantico-Bold.woff') format('woff'),
-			url('assets/fonts/Quantico-Bold.ttf') format('truetype'),
-			url('assets/fonts/Quantico-Bold.svg#Quantico-Bold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Quantico-BoldItalic';
-			src: url('assets/fonts/Quantico-BoldItalic.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Quantico-BoldItalic.woff') format('woff'),
-			url('assets/fonts/Quantico-BoldItalic.ttf') format('truetype'),
-			url('assets/fonts/Quantico-BoldItalic.svg#Quantico-BoldItalic') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Quantico-Italic';
-			src: url('assets/fonts/Quantico-Italic.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Quantico-Italic.woff') format('woff'),
-			url('assets/fonts/Quantico-Italic.ttf') format('truetype'),
-			url('assets/fonts/Quantico-Italic.svg#Quantico-Italic') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Quantico';
-			src: url('assets/fonts/Quantico-Regular.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/Quantico-Regular.woff') format('woff'),
-			url('assets/fonts/Quantico-Regular.ttf') format('truetype'),
-			url('assets/fonts/Quantico-Regular.svg#Quantico') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Share Tech Mono';
-			src: url('assets/fonts/ShareTechMono-Regular.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/ShareTechMono-Regular.woff') format('woff'),
-			url('assets/fonts/ShareTechMono-Regular.ttf') format('truetype'),
-			url('assets/fonts/ShareTechMono-Regular.svg#Share%20Tech%20Mono') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'VCR OSD Mono Bold';
-			src: url('assets/fonts/vcr-bold.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/vcr-bold.woff') format('woff'),
-			url('assets/fonts/vcr-bold.ttf') format('truetype'),
-			url('assets/fonts/vcr-bold.svg#VCR%20OSD%20Mono%20Bold') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'VCR OSD Mono Bold Italic';
-			src: url('assets/fonts/vcr-bolditalic.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/vcr-bolditalic.woff') format('woff'),
-			url('assets/fonts/vcr-bolditalic.ttf') format('truetype'),
-			url('assets/fonts/vcr-bolditalic.svg#VCR%20OSD%20Mono%20Bold%20Italic') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'VCR OSD Mono Italic';
-			src: url('assets/fonts/vcr-italic.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/vcr-italic.woff') format('woff'),
-			url('assets/fonts/vcr-italic.ttf') format('truetype'),
-			url('assets/fonts/vcr-italic.svg#VCR%20OSD%20Mono%20Italic') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'VCR OSD Mono';
-			src: url('assets/fonts/vcr.eot?#iefix') format('embedded-opentype'),
-			url('assets/fonts/vcr.woff') format('woff'),
-			url('assets/fonts/vcr.ttf') format('truetype'),
-			url('assets/fonts/vcr.svg#VCR%20OSD%20Mono') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Nokia Cellphone FC Small';
-			src: url('flixel/fonts/nokiafc22.eot?#iefix') format('embedded-opentype'),
-			url('flixel/fonts/nokiafc22.woff') format('woff'),
-			url('flixel/fonts/nokiafc22.ttf') format('truetype'),
-			url('flixel/fonts/nokiafc22.svg#Nokia%20Cellphone%20FC%20Small') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Monsterrat';
-			src: url('flixel/fonts/monsterrat.eot?#iefix') format('embedded-opentype'),
-			url('flixel/fonts/monsterrat.woff') format('woff'),
-			url('flixel/fonts/monsterrat.ttf') format('truetype'),
-			url('flixel/fonts/monsterrat.svg#Monsterrat') format('svg');
-			font-weight: normal;
-			font-style: normal;
+		#openfl-content { width: 100%; height: 100%; }
+
+		/* Control Button Styles */
+		.ctrl {
+			position: fixed;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(255, 255, 255, 0.1);
+			border: 2px solid #fff;
+			border-radius: 15px;
+			color: #fff;
+			font-family: sans-serif;
+			font-weight: bold;
+			font-size: 24px;
+			user-select: none;
+			touch-action: none; /* Prevents zooming/scrolling while playing */
+			z-index: 1000;
 		}
 
+		/* Arrow Layout (Classic Left-Hand / Right-Hand split) */
+		#left-arrow  { left: 20px;  bottom: 140px; width: 90px; height: 90px; border-color: #C24B99; }
+		#down-arrow  { left: 120px; bottom: 40px;  width: 90px; height: 90px; border-color: #00FFFF; }
+		#up-arrow    { right: 120px; bottom: 40px;  width: 90px; height: 90px; border-color: #12FA05; }
+		#right-arrow { right: 20px;  bottom: 140px; width: 90px; height: 90px; border-color: #F9393F; }
+
+		/* Menu Buttons */
+		#enter-btn { left: 50%; transform: translateX(-50%); bottom: 30px; width: 140px; height: 50px; background: rgba(0, 200, 0, 0.3); }
+		#esc-btn   { top: 20px; right: 20px; width: 80px; height: 40px; font-size: 14px; background: rgba(200, 0, 0, 0.3); }
 	</style>
-	
 </head>
 <body>
-	
-	<noscript>This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.</noscript>
-	
+
 	<div id="openfl-content"></div>
-	
+
+	<div class="ctrl" id="left-arrow">L</div>
+	<div class="ctrl" id="down-arrow">D</div>
+	<div class="ctrl" id="up-arrow">U</div>
+	<div class="ctrl" id="right-arrow">R</div>
+	<div class="ctrl" id="enter-btn">ENTER</div>
+	<div class="ctrl" id="esc-btn">PAUSE</div>
+
 	<script type="text/javascript">
-		lime.embed ("Funkin", "openfl-content", 1280, 720, { parameters: {} });
+		// 1. Initialize Game
+		lime.embed ("Funkin", "openfl-content", 0, 0, { parameters: { renderer: "canvas" } });
+
+		// 2. Input Mapping
+		const keyMap = {
+			'left-arrow':  { key: 'ArrowLeft',  code: 37 },
+			'down-arrow':  { key: 'ArrowDown',  code: 40 },
+			'up-arrow':    { key: 'ArrowUp',    code: 38 },
+			'right-arrow': { key: 'ArrowRight', code: 39 },
+			'enter-btn':   { key: 'Enter',      code: 13 },
+			'esc-btn':     { key: 'Escape',     code: 27 }
+		};
+
+		// 3. Attach Listeners
+		Object.keys(keyMap).forEach(id => {
+			const el = document.getElementById(id);
+			const k = keyMap[id];
+
+			const trigger = (type, active) => {
+				const event = new KeyboardEvent(type, {
+					key: k.key, keyCode: k.code, which: k.code,
+					bubbles: true, cancelable: true, composed: true
+				});
+				window.dispatchEvent(event);
+				// High-intensity visual feedback
+				el.style.backgroundColor = active ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 0.1)";
+			};
+
+			el.addEventListener('touchstart', (e) => { e.preventDefault(); trigger('keydown', true); });
+			el.addEventListener('touchend',   (e) => { e.preventDefault(); trigger('keyup', false); });
+		});
+
+		// 4. iOS/Mobile Audio Unlock
+		window.addEventListener('touchstart', () => {
+			const ctx = window.AudioContext || window.webkitAudioContext;
+			if (ctx) { const c = new ctx(); if (c.state === 'suspended') c.resume(); }
+		}, {once: true});
 	</script>
-	
 </body>
 </html>
